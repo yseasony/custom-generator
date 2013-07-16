@@ -28,8 +28,19 @@ public class JdbcTypeNameTranslator {
 
     private static Map<Integer, String> typeToName;
     private static Map<String, Integer> nameToType;
+    private static Map<Integer, String> typeToJavaType;
 
     static {
+    	typeToJavaType = new HashMap<Integer, String>();
+    	typeToJavaType.put(Types.BIGINT, "long");
+    	typeToJavaType.put(Types.CHAR, "string");
+    	typeToJavaType.put(Types.INTEGER, "int");
+    	typeToJavaType.put(Types.NVARCHAR, "string"); //$NON-NLS-1$
+    	typeToJavaType.put(Types.LONGNVARCHAR, "string"); //$NON-NLS-1$
+    	typeToJavaType.put(Types.SMALLINT, "short");
+    	typeToJavaType.put(Types.TINYINT, "short");
+    	typeToJavaType.put(Types.VARCHAR, "string");
+
         typeToName = new HashMap<Integer, String>();
         typeToName.put(Types.ARRAY, "ARRAY"); //$NON-NLS-1$
         typeToName.put(Types.BIGINT, "BIGINT"); //$NON-NLS-1$
@@ -139,6 +150,15 @@ public class JdbcTypeNameTranslator {
         Integer answer = nameToType.get(jdbcTypeName);
         if (answer == null) {
             answer = Types.OTHER;
+        }
+
+        return answer;
+    }
+
+    public static String getJavaTypeName(int jdbcType) {
+        String answer = typeToJavaType.get(jdbcType);
+        if (answer == null) {
+            answer = "OTHER"; //$NON-NLS-1$
         }
 
         return answer;

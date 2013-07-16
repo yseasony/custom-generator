@@ -481,4 +481,12 @@ public class FullyQualifiedJavaType implements
         int index = baseQualifiedName.lastIndexOf('.');
         return baseQualifiedName.substring(0, index);
     }
+
+    /**
+     * add
+     * @return
+     */
+	public String getBaseQualifiedName() {
+		return baseQualifiedName;
+	}
 }

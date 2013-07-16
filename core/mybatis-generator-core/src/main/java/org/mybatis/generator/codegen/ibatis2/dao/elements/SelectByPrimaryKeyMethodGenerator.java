@@ -55,24 +55,24 @@ public class SelectByPrimaryKeyMethodGenerator extends
                     introspectedTable.getBaseRecordType());
             topLevelClass.addImportedType(keyType);
 
-            sb.setLength(0);
-            sb.append(keyType.getShortName());
-            sb.append(" _key = new "); //$NON-NLS-1$
-            sb.append(keyType.getShortName());
-            sb.append("();"); //$NON-NLS-1$
-            method.addBodyLine(sb.toString());
-
-            for (IntrospectedColumn introspectedColumn : introspectedTable
-                    .getPrimaryKeyColumns()) {
-                sb.setLength(0);
-                sb.append("_key."); //$NON-NLS-1$
-                sb.append(getSetterMethodName(introspectedColumn
-                        .getJavaProperty()));
-                sb.append('(');
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append(");"); //$NON-NLS-1$
-                method.addBodyLine(sb.toString());
-            }
+//            sb.setLength(0);
+//            sb.append(keyType.getShortName());
+//            sb.append(" _key = new "); //$NON-NLS-1$
+//            sb.append(keyType.getShortName());
+//            sb.append("();"); //$NON-NLS-1$
+//            method.addBodyLine(sb.toString());
+//
+//            for (IntrospectedColumn introspectedColumn : introspectedTable
+//                    .getPrimaryKeyColumns()) {
+//                sb.setLength(0);
+//                sb.append("_key."); //$NON-NLS-1$
+//                sb.append(getSetterMethodName(introspectedColumn
+//                        .getJavaProperty()));
+//                sb.append('(');
+//                sb.append(introspectedColumn.getJavaProperty());
+//                sb.append(");"); //$NON-NLS-1$
+//                method.addBodyLine(sb.toString());
+//            }
         }
 
         FullyQualifiedJavaType returnType = method.getReturnType();
@@ -84,7 +84,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
         sb.append(") "); //$NON-NLS-1$
         sb.append(daoTemplate.getQueryForObjectMethod(introspectedTable
                 .getIbatis2SqlMapNamespace(), introspectedTable
-                .getSelectByPrimaryKeyStatementId(), "_key")); //$NON-NLS-1$
+                .getSelectByPrimaryKeyStatementId(), "id")); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
         method.addBodyLine("return record;"); //$NON-NLS-1$
 

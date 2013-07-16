@@ -54,31 +54,31 @@ public class DeleteByPrimaryKeyMethodGenerator extends
                     introspectedTable.getBaseRecordType());
             topLevelClass.addImportedType(keyType);
 
-            sb.setLength(0);
-            sb.append(keyType.getShortName());
-            sb.append(" _key = new "); //$NON-NLS-1$
-            sb.append(keyType.getShortName());
-            sb.append("();"); //$NON-NLS-1$
-            method.addBodyLine(sb.toString());
-
-            for (IntrospectedColumn introspectedColumn : introspectedTable
-                    .getPrimaryKeyColumns()) {
-                sb.setLength(0);
-                sb.append("_key."); //$NON-NLS-1$
-                sb.append(getSetterMethodName(introspectedColumn
-                        .getJavaProperty()));
-                sb.append('(');
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append(");"); //$NON-NLS-1$
-                method.addBodyLine(sb.toString());
-            }
+//            sb.setLength(0);
+//            sb.append(keyType.getShortName());
+//            sb.append(" _key = new "); //$NON-NLS-1$
+//            sb.append(keyType.getShortName());
+//            sb.append("();"); //$NON-NLS-1$
+//            method.addBodyLine(sb.toString());
+//
+//            for (IntrospectedColumn introspectedColumn : introspectedTable
+//                    .getPrimaryKeyColumns()) {
+//                sb.setLength(0);
+//                sb.append("_key."); //$NON-NLS-1$
+//                sb.append(getSetterMethodName(introspectedColumn
+//                        .getJavaProperty()));
+//                sb.append('(');
+//                sb.append(introspectedColumn.getJavaProperty());
+//                sb.append(");"); //$NON-NLS-1$
+//                method.addBodyLine(sb.toString());
+//            }
         }
 
         sb.setLength(0);
         sb.append("int rows = "); //$NON-NLS-1$
         sb.append(daoTemplate.getDeleteMethod(introspectedTable
                 .getIbatis2SqlMapNamespace(), introspectedTable
-                .getDeleteByPrimaryKeyStatementId(), "_key")); //$NON-NLS-1$
+                .getDeleteByPrimaryKeyStatementId(), "id")); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
         method.addBodyLine("return rows;"); //$NON-NLS-1$
 

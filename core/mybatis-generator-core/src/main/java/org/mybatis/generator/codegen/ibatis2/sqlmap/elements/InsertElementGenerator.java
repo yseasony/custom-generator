@@ -49,8 +49,11 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         FullyQualifiedJavaType parameterType = introspectedTable.getRules()
                 .calculateAllFieldsClass();
 
+//        answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$
+//                parameterType.getFullyQualifiedName()));
+
         answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$
-                parameterType.getFullyQualifiedName()));
+        		introspectedTable.getBaseType()));
 
         context.getCommentGenerator().addComment(answer);
 

@@ -40,13 +40,16 @@ public class InsertSelectiveElementGenerator extends
         XmlElement answer = new XmlElement("insert"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute(
-                "id", introspectedTable.getInsertSelectiveStatementId())); //$NON-NLS-1$
+                "id", introspectedTable.getInsertStatementId())); //$NON-NLS-1$
 
         FullyQualifiedJavaType parameterType = introspectedTable.getRules()
                 .calculateAllFieldsClass();
 
+//        answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$
+//                parameterType.getFullyQualifiedName()));
+
         answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$
-                parameterType.getFullyQualifiedName()));
+        		introspectedTable.getBaseType()));
 
         context.getCommentGenerator().addComment(answer);
 

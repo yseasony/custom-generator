@@ -122,7 +122,13 @@ public class Ibatis2FormattingUtilities {
             }
             return sb.toString();
         } else {
-            return getEscapedColumnName(introspectedColumn);
+        	StringBuilder sb = new StringBuilder();
+
+            sb.append(getAliasedEscapedColumnName(introspectedColumn));
+            sb.append(" as ");
+            sb.append(introspectedColumn.getJavaProperty());
+            return sb.toString();
+            //return getEscapedColumnName(introspectedColumn);
         }
     }
 

@@ -103,13 +103,13 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
 
     protected void calculateJavaModelGenerators(List<String> warnings,
             ProgressCallback progressCallback) {
-        if (getRules().generateExampleClass()) {
-            AbstractJavaGenerator javaGenerator = new ExampleGenerator(
-                    isJava5Targeted());
-            initializeAbstractGenerator(javaGenerator, warnings,
-                    progressCallback);
-            javaModelGenerators.add(javaGenerator);
-        }
+//        if (getRules().generateExampleClass()) {
+//            AbstractJavaGenerator javaGenerator = new ExampleGenerator(
+//                    isJava5Targeted());
+//            initializeAbstractGenerator(javaGenerator, warnings,
+//                    progressCallback);
+//            javaModelGenerators.add(javaGenerator);
+//        }
 
         if (getRules().generatePrimaryKeyClass()) {
             AbstractJavaGenerator javaGenerator = new PrimaryKeyGenerator();

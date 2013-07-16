@@ -32,22 +32,7 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.AbstractDAOElementGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.CountByExampleMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.DeleteByExampleMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.DeleteByPrimaryKeyMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.InsertMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.InsertSelectiveMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.SelectByExampleWithBLOBsMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.SelectByExampleWithoutBLOBsMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.SelectByPrimaryKeyMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByExampleParmsInnerclassGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByExampleSelectiveMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByExampleWithBLOBsMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByExampleWithoutBLOBsMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByPrimaryKeySelectiveMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
-import org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
+import org.mybatis.generator.codegen.ibatis2.dao.elements.*;
 import org.mybatis.generator.codegen.ibatis2.dao.templates.AbstractDAOTemplate;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.rules.Rules;
@@ -77,21 +62,24 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
         TopLevelClass topLevelClass = getTopLevelClassShell();
         Interface interfaze = getInterfaceShell();
 
-        addCountByExampleMethod(topLevelClass, interfaze);
-        addDeleteByExampleMethod(topLevelClass, interfaze);
+        //addCountByExampleMethod(topLevelClass, interfaze);
+        //addDeleteByExampleMethod(topLevelClass, interfaze);
         addDeleteByPrimaryKeyMethod(topLevelClass, interfaze);
         addInsertMethod(topLevelClass, interfaze);
-        addInsertSelectiveMethod(topLevelClass, interfaze);
-        addSelectByExampleWithBLOBsMethod(topLevelClass, interfaze);
-        addSelectByExampleWithoutBLOBsMethod(topLevelClass, interfaze);
-        addSelectByPrimaryKeyMethod(topLevelClass, interfaze);
-        addUpdateByExampleParmsInnerclass(topLevelClass, interfaze);
-        addUpdateByExampleSelectiveMethod(topLevelClass, interfaze);
-        addUpdateByExampleWithBLOBsMethod(topLevelClass, interfaze);
-        addUpdateByExampleWithoutBLOBsMethod(topLevelClass, interfaze);
-        addUpdateByPrimaryKeySelectiveMethod(topLevelClass, interfaze);
+        //addInsertSelectiveMethod(topLevelClass, interfaze);
+        //addSelectByExampleWithBLOBsMethod(topLevelClass, interfaze);
+        //addSelectByExampleWithoutBLOBsMethod(topLevelClass, interfaze);
+        //addSelectByPrimaryKeyMethod(topLevelClass, interfaze);
+        //addUpdateByExampleParmsInnerclass(topLevelClass, interfaze);
+        //addUpdateByExampleSelectiveMethod(topLevelClass, interfaze);
+        //addUpdateByExampleWithBLOBsMethod(topLevelClass, interfaze);
+        //addUpdateByExampleWithoutBLOBsMethod(topLevelClass, interfaze);
+        //addUpdateByPrimaryKeySelectiveMethod(topLevelClass, interfaze);
         addUpdateByPrimaryKeyWithBLOBsMethod(topLevelClass, interfaze);
         addUpdateByPrimaryKeyWithoutBLOBsMethod(topLevelClass, interfaze);
+
+        addSelectByPrimaryKeyMethod(topLevelClass, interfaze);
+        addSelectMethod(topLevelClass, interfaze);
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().clientGenerated(interfaze,
@@ -126,8 +114,8 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
         commentGenerator.addJavaFileComment(answer);
 
         // add constructor from the template
-        answer.addMethod(daoTemplate.getConstructorClone(commentGenerator,
-                implementationType, introspectedTable));
+        //answer.addMethod(daoTemplate.getConstructorClone(commentGenerator,
+        //        implementationType, introspectedTable));
 
         // add any fields from the template
         for (Field field : daoTemplate.getFieldClones(commentGenerator,
@@ -233,6 +221,15 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
         if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
             AbstractDAOElementGenerator methodGenerator = new SelectByExampleWithoutBLOBsMethodGenerator(
                     generateForJava5);
+            initializeAndExecuteGenerator(methodGenerator, topLevelClass,
+                    interfaze);
+        }
+    }
+    /** add **/
+    protected void addSelectMethod(TopLevelClass topLevelClass,
+            Interface interfaze) {
+        if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
+            AbstractDAOElementGenerator methodGenerator = new SelectMethodGenerator(true);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }

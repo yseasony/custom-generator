@@ -25,8 +25,10 @@ import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.AbstractXmlElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.BaseColumnListElementGenerator;
+import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.BaseWhereElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.BlobColumnListElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.CountByExampleElementGenerator;
+import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.CountElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.DeleteByExampleElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.DeleteByPrimaryKeyElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.ExampleWhereClauseElementGenerator;
@@ -34,9 +36,12 @@ import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.InsertElementGenera
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.InsertSelectiveElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.ResultMapWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.ResultMapWithoutBLOBsElementGenerator;
+import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.SelectBaseWhereElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.SelectByExampleWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.SelectByExampleWithoutBLOBsElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.SelectByPrimaryKeyElementGenerator;
+import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.SelectPagingElementGenerator;
+import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.TypeAliasElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.UpdateByExampleSelectiveElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.UpdateByExampleWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.sqlmap.elements.UpdateByExampleWithoutBLOBsElementGenerator;
@@ -65,27 +70,58 @@ public class SqlMapGenerator extends AbstractXmlGenerator {
 
         context.getCommentGenerator().addRootComment(answer);
 
-        addResultMapWithoutBLOBsElement(answer);
-        addResultMapWithBLOBsElement(answer);
-        addExampleWhereClauseElement(answer);
+        addTypeAliasElement(answer);//自定义
+        addBaseWhereElement(answer);//自定义
+        addSelectPagingElement(answer);//自定义
+        addSelectPagingCountElement(answer);//自定义
+        addSelectBaseWhere(answer);//自定义
+
+        //addResultMapWithoutBLOBsElement(answer);
+        //addResultMapWithBLOBsElement(answer);
+        //addExampleWhereClauseElement(answer);
         addBaseColumnListElement(answer);
         addBlobColumnListElement(answer);
-        addSelectByExampleWithBLOBsElement(answer);
-        addSelectByExampleWithoutBLOBsElement(answer);
+        //addSelectByExampleWithBLOBsElement(answer);
+        //addSelectByExampleWithoutBLOBsElement(answer);
         addSelectByPrimaryKeyElement(answer);
         addDeleteByPrimaryKeyElement(answer);
-        addDeleteByExampleElement(answer);
+        //addDeleteByExampleElement(answer);
         addInsertElement(answer);
-        addInsertSelectiveElement(answer);
-        addCountByExampleElement(answer);
-        addUpdateByExampleSelectiveElement(answer);
-        addUpdateByExampleWithBLOBsElement(answer);
-        addUpdateByExampleWithoutBLOBsElement(answer);
-        addUpdateByPrimaryKeySelectiveElement(answer);
-        addUpdateByPrimaryKeyWithBLOBsElement(answer);
-        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
+        //addInsertSelectiveElement(answer);
+        //addCountByExampleElement(answer);
+        //addUpdateByExampleSelectiveElement(answer);
+        //addUpdateByExampleWithBLOBsElement(answer);
+        //addUpdateByExampleWithoutBLOBsElement(answer);
+        //addUpdateByPrimaryKeySelectiveElement(answer);
+        //addUpdateByPrimaryKeyWithBLOBsElement(answer);
+        //addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
 
         return answer;
+    }
+
+    protected void addSelectBaseWhere(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new SelectBaseWhereElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+
+    protected void addSelectPagingCountElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new CountElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+
+    protected void addSelectPagingElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new SelectPagingElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+
+    protected void addTypeAliasElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new TypeAliasElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+
+    protected void addBaseWhereElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new BaseWhereElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
     }
 
     protected void addResultMapWithoutBLOBsElement(XmlElement parentElement) {

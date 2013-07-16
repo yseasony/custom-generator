@@ -131,6 +131,7 @@ public class ShellRunner {
             e.printStackTrace();
             return;
         } catch (InvalidConfigurationException e) {
+        	e.printStackTrace();
             writeLine(getString("Progress.16")); //$NON-NLS-1$
             for (String error : e.getErrors()) {
                 writeLine(error);

@@ -22,6 +22,7 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
+import org.mybatis.generator.internal.types.JdbcTypeNameTranslator;
 
 /**
  * 
@@ -41,21 +42,29 @@ public class SelectByPrimaryKeyElementGenerator extends
 
         answer.addAttribute(new Attribute(
                 "id", introspectedTable.getSelectByPrimaryKeyStatementId())); //$NON-NLS-1$
-        if (introspectedTable.getRules().generateResultMapWithBLOBs()) {
-            answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
-                    introspectedTable.getResultMapWithBLOBsId()));
-        } else {
-            answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
-                    introspectedTable.getBaseResultMapId()));
-        }
+//        if (introspectedTable.getRules().generateResultMapWithBLOBs()) {
+//            answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
+//                    introspectedTable.getResultMapWithBLOBsId()));
+//        } else {
+//            answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
+//                    introspectedTable.getBaseResultMapId()));
+//        }
 
-        String parameterType;
-        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-            parameterType = introspectedTable.getPrimaryKeyType();
-        } else {
-            // select by primary key, but no primary key class. Fields
-            // must be in the base record
-            parameterType = introspectedTable.getBaseRecordType();
+        answer.addAttribute(new Attribute("resultClass", //$NON-NLS-1$
+        		introspectedTable.getBaseType()));
+
+        String parameterType = "";
+//        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
+//            parameterType = introspectedTable.getPrimaryKeyType();
+//        } else {
+//            // select by primary key, but no primary key class. Fields
+//            // must be in the base record
+//            parameterType = introspectedTable.getBaseRecordType();
+//        }
+
+        if (introspectedTable.getPrimaryKeyColumns() != null && introspectedTable.getPrimaryKeyColumns().size() > 0) {
+        	//parameterType = JdbcTypeNameTranslator.getJavaTypeName(introspectedTable.getPrimaryKeyColumns().get(0).getJdbcType());
+        	  parameterType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().getBaseQualifiedName();
         }
 
         answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$

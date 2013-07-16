@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.plugins.V;
 
 /**
  * 
@@ -70,6 +71,7 @@ public class JDBCConnectionConfiguration extends PropertyHolder {
     }
 
     public void setDriverClass(String driverClass) {
+    	V.driver = driverClass;
         this.driverClass = driverClass;
     }
 

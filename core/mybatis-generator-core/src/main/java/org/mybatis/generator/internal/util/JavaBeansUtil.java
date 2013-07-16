@@ -235,8 +235,9 @@ public class JavaBeansUtil {
             sb.append(property);
             sb.append(" = "); //$NON-NLS-1$
             sb.append(property);
-            sb.append(" == null ? null : "); //$NON-NLS-1$
-            sb.append(property);
+            //sb.append(" == null ? null : "); //$NON-NLS-1$
+            //sb.append(property);
+            //sb.append(".trim();"); //$NON-NLS-1$
             sb.append(".trim();"); //$NON-NLS-1$
             method.addBodyLine(sb.toString());
         } else {

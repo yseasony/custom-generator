@@ -42,8 +42,11 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
 
         answer.addAttribute(new Attribute(
                 "id", introspectedTable.getUpdateByPrimaryKeyStatementId())); //$NON-NLS-1$
+//        answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$
+//                introspectedTable.getBaseRecordType()));
+
         answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$
-                introspectedTable.getBaseRecordType()));
+        		introspectedTable.getBaseType()));
 
         context.getCommentGenerator().addComment(answer);
 
@@ -53,32 +56,62 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
         answer.addElement(new TextElement(sb.toString()));
 
         // set up for first column
-        sb.setLength(0);
-        sb.append("set "); //$NON-NLS-1$
+//        sb.setLength(0);
+//        sb.append("set "); //$NON-NLS-1$
+//
+//        Iterator<IntrospectedColumn> iter = introspectedTable.getBaseColumns()
+//                .iterator();
+//        while (iter.hasNext()) {
+//            IntrospectedColumn introspectedColumn = iter.next();
+//
+//            sb.append(Ibatis2FormattingUtilities
+//                    .getEscapedColumnName(introspectedColumn));
+//            sb.append(" = "); //$NON-NLS-1$
+//            sb.append(Ibatis2FormattingUtilities
+//                    .getParameterClause(introspectedColumn));
+//
+//            if (iter.hasNext()) {
+//                sb.append(',');
+//            }
+//
+//            answer.addElement(new TextElement(sb.toString()));
+//
+//            // set up for the next column
+//            if (iter.hasNext()) {
+//                sb.setLength(0);
+//                OutputUtilities.xmlIndent(sb, 1);
+//            }
+//        }
 
-        Iterator<IntrospectedColumn> iter = introspectedTable.getBaseColumns()
-                .iterator();
-        while (iter.hasNext()) {
-            IntrospectedColumn introspectedColumn = iter.next();
+        XmlElement dynamicElement = new XmlElement("dynamic"); //$NON-NLS-1$
+        dynamicElement.addAttribute(new Attribute("prepend", "set")); //$NON-NLS-1$ //$NON-NLS-2$
+        answer.addElement(dynamicElement);
 
+        for (IntrospectedColumn introspectedColumn : introspectedTable
+                .getAllColumnsNpPK()) {
+            XmlElement isNotNullElement = new XmlElement("isNotNull"); //$NON-NLS-1$
+            isNotNullElement.addAttribute(new Attribute("prepend", ",")); //$NON-NLS-1$ //$NON-NLS-2$
+            isNotNullElement.addAttribute(new Attribute(
+                    "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$ //$NON-NLS-2$
+            dynamicElement.addElement(isNotNullElement);
+
+            sb.setLength(0);
             sb.append(Ibatis2FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+                    .getAliasedEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(Ibatis2FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getParameterClause(introspectedColumn)); //$NON-NLS-1$
 
-            if (iter.hasNext()) {
-                sb.append(',');
-            }
-
-            answer.addElement(new TextElement(sb.toString()));
-
-            // set up for the next column
-            if (iter.hasNext()) {
-                sb.setLength(0);
-                OutputUtilities.xmlIndent(sb, 1);
-            }
+            isNotNullElement.addElement(new TextElement(sb.toString()));
         }
+
+//            answer.addElement(new TextElement(sb.toString()));
+//
+//            // set up for the next column
+//            if (iter.hasNext()) {
+//                sb.setLength(0);
+//                OutputUtilities.xmlIndent(sb, 1);
+//            }
+//        }
 
         boolean and = false;
         for (IntrospectedColumn introspectedColumn : introspectedTable

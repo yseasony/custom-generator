@@ -39,12 +39,17 @@ public class DeleteByPrimaryKeyElementGenerator extends
 
         answer.addAttribute(new Attribute(
                 "id", introspectedTable.getDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$
-        String parameterClass;
-        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-            parameterClass = introspectedTable.getPrimaryKeyType();
-        } else {
-            parameterClass = introspectedTable.getBaseRecordType();
-        }
+
+        String parameterClass = "";
+//        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
+//            parameterClass = introspectedTable.getPrimaryKeyType();
+//        } else {
+//            parameterClass = introspectedTable.getBaseRecordType();
+//        }
+        if (introspectedTable.getPrimaryKeyColumns() != null && introspectedTable.getPrimaryKeyColumns().size() > 0) {
+        	//parameterClass = JdbcTypeNameTranslator.getJavaTypeName(introspectedTable.getPrimaryKeyColumns().get(0).getJdbcType());
+        	parameterClass = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().getBaseQualifiedName();
+		}
         answer.addAttribute(new Attribute("parameterClass", //$NON-NLS-1$
                 parameterClass));
 
