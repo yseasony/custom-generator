@@ -60,7 +60,7 @@ public class SelectPagingElementGenerator extends AbstractXmlElementGenerator {
 
 		if ("oracle.jdbc.OracleDriver".equalsIgnoreCase(V.driver))
 			answer.addElement(new TextElement(
-					"<![CDATA[) row_ where rownum <= #page.limit# ) where rownum_ > #page.offset#]]>"));
+					"<![CDATA[) row_ where rownum <= #page.offset# ) where rownum_ > #page.pageSize#]]>"));
 		else {
 			answer.addElement(new TextElement("LIMIT #page.offset#, #page.pageSize#"));
 		}

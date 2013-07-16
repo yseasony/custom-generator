@@ -12,7 +12,7 @@ public class CountElementGenerator extends AbstractXmlElementGenerator {
 		answer.addAttribute(new Attribute("id", "selectPageCount"));
 		answer.addAttribute(new Attribute("parameterClass", "java.util.Map"));
 
-		answer.addAttribute(new Attribute("resultClass", "java.lang.Long"));
+		answer.addAttribute(new Attribute("resultClass", "java.lang.Integer"));
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("select count(*) from ");
